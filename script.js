@@ -1,9 +1,23 @@
-fetch("./provincias.json")
+/* const xhr = new XMLHttpRequest();
+xhr.open("GET", "./provincias.json", true);
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    const datos = xhr.responseText;
+    localStorage.setItem("provincias", datos);
+  }
+};
+xhr.send(); */
+/* fetch("./provincias.json")
   .then((respuesta) => respuesta.json())
-  .then((datos) => localStorage.setItem("provincias", JSON.stringify(datos)));
-
+  .then((datos) => localStorage.setItem("provincias", JSON.stringify(datos))); */
+async function cargarDatos() {
+  const respuesta = await fetch("./provincias.json");
+  const datos = await respuesta.json();
+  localStorage.setItem("provincias", JSON.stringify(datos));
+}
+cargarDatos();
 document.addEventListener("DOMContentLoaded", () => {
-  const gridProvincias = document.getElementById("grid-provincias");
+  const gridProvincias = document.querySelector("div.grid-provincias");
   const datosProvincias = JSON.parse(localStorage.getItem("provincias"));
   console.log(datosProvincias);
   if (datosProvincias) {
